@@ -11,7 +11,7 @@ services:
     image: postgres:13
     restart: always
     volumes:
-      - build_db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data/
       - ./packages/db/prisma/migrations/:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_DB=typebot
@@ -41,4 +41,4 @@ services:
       - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
 volumes:
-  build_db_data:
+  postgres_data:
