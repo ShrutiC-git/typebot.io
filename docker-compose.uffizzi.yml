@@ -4,7 +4,7 @@ version: '3.9'
 x-uffizzi:
   ingress:
     service: typebot-viewer
-    port: 8081
+    port: 3001
 
 services:
   typebot-db:
@@ -20,12 +20,12 @@ services:
     depends_on:
       - db
     ports:
-      - '8080:3000'
+      - '3000:3000'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
     environment:
       - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/typebot
-      - NEXTAUTH_URL=http://localhost:8080
-      - NEXT_PUBLIC_VIEWER_URL=http://localhost:8081
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
       - ADMIN_EMAIL=me@email.com
       - GITHUB_CLIENT_ID=37a279454d016598c2df
@@ -33,11 +33,11 @@ services:
   typebot-viewer:
     image: "${TYPEBOT_VIEWER_IMAGE}"
     ports:
-      - '8081:3000'
+      - '3001:3001'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
     environment:
       - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/typebot
-      - NEXT_PUBLIC_VIEWER_URL=http://localhost:8081
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
 volumes:
   build_db_data:
