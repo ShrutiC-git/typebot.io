@@ -11,7 +11,7 @@ services:
     image: postgres:13
     restart: always
     volumes:
-      - build_db_data:/var/lib/postgresql/data
+      - build_db_data:/var/lib/postgresql/
     environment:
       - POSTGRES_DB=typebot
       - POSTGRES_PASSWORD=typebot
