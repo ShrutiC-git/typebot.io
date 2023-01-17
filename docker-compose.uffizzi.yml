@@ -17,10 +17,6 @@ services:
       - POSTGRES_PASSWORD=typebot
   typebot-builder:
     image: "${TYPEBOT_BUILDER_IMAGE}"
-    build:
-      context: .
-      args:
-        - SCOPE=builder
     depends_on:
       - db
     ports:
@@ -36,10 +32,6 @@ services:
       - GITHUB_CLIENT_SECRET=4b288a509352b591cd4478e3ac901668b2f8ed03
   typebot-viewer:
     image: "${TYPEBOT_VIEWER_IMAGE}"
-    build:
-      context: .
-      args:
-        - SCOPE=viewer
     ports:
       - '8081:3000'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
