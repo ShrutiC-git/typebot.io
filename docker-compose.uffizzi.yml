@@ -8,7 +8,7 @@ x-uffizzi:
 
 services:
   typebot-db:
-    image: postgres:13
+    image: postgres
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -16,6 +16,7 @@ services:
     environment:
       - POSTGRES_DB=typebot
       - POSTGRES_PASSWORD=typebot
+      - PGDATA=/tmp
   typebot-builder:
     image: "${TYPEBOT_BUILDER_IMAGE}"
     depends_on:
