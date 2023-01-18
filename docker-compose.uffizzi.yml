@@ -8,15 +8,20 @@ x-uffizzi:
 
 services:
   typebot-db:
-    image: postgres
+    image: postgres:latest
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./packages/db/prisma/migrations/20220214162352_initial_schema:/docker-entrypoint-initdb.d/
+      - ./packages/db/prisma/migrations/20220214162352_initial_schema/:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_DB=typebot
       - POSTGRES_PASSWORD=typebot
       - PGDATA=/tmp
+    deploy:
+          resources:
+            limits:
+              memory: 1000M
+
   typebot-builder:
     image: "${TYPEBOT_BUILDER_IMAGE}"
     depends_on:
@@ -32,6 +37,11 @@ services:
       - ADMIN_EMAIL=me@email.com
       - GITHUB_CLIENT_ID=37a279454d016598c2df
       - GITHUB_CLIENT_SECRET=4b288a509352b591cd4478e3ac901668b2f8ed03
+    deploy:
+          resources:
+            limits:
+              memory: 1000M
+
   typebot-viewer:
     image: "${TYPEBOT_VIEWER_IMAGE}"
     ports:
@@ -41,5 +51,9 @@ services:
       - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/typebot
       - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
+    deploy:
+          resources:
+            limits:
+              memory: 1000M
 volumes:
   postgres_data:
