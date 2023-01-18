@@ -3,7 +3,6 @@ WORKDIR /app
 ARG SCOPE
 ENV SCOPE=${SCOPE}
 RUN npm --global install pnpm
-
 FROM base AS builder
 RUN apt-get -qy update && apt-get -qy --no-install-recommends install openssl git
 COPY pnpm-lock.yaml .npmrc pnpm-workspace.yaml ./

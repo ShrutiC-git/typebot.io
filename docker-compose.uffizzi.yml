@@ -8,7 +8,7 @@ x-uffizzi:
 
 services:
 
-  typebot-db:
+  postgres:
     image: postgres:latest
     restart: always
     volumes:
@@ -23,11 +23,9 @@ services:
           resources:
             limits:
               memory: 1000M
-
+ 
   typebot-builder:
     image: "${TYPEBOT_BUILDER_IMAGE}"
-    depends_on:
-      - db
     ports:
       - '3000:3000'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
