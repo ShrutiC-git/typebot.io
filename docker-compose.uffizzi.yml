@@ -12,7 +12,7 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./packages/db/prisma/migrations/20220214162352_initial_schema/:/docker-entrypoint-initdb.d/
+      - ./packages/db/prisma/migrations/20220214162352_initial_schema:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_DB=typebot
       - POSTGRES_PASSWORD=typebot
