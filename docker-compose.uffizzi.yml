@@ -7,6 +7,7 @@ x-uffizzi:
     port: 3001
 
 services:
+
   typebot-db:
     image: postgres:latest
     restart: always
@@ -15,6 +16,7 @@ services:
       - ./packages/db/prisma/migrations/20220214162352_initial_schema/:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_DB=typebot
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=typebot
       - PGDATA=/tmp
     deploy:
