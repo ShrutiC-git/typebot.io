@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.3'
 
 # uffizzi integration
 x-uffizzi:
@@ -12,9 +12,9 @@ services:
     image: postgres:13
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=PublicTypebot
+      - POSTGRES_DB=typebot
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=typebot
       - PGDATA=/tmp
@@ -29,7 +29,7 @@ services:
       - '3000:3000'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
     environment:
-      - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/PublicTypebot
+      - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/typebot
       - NEXTAUTH_URL=http://localhost:3000
       - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
@@ -47,7 +47,7 @@ services:
       - '3001:3001'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
     environment:
-      - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/PublicTypebot
+      - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/typebot
       - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
     deploy:
@@ -55,4 +55,4 @@ services:
             limits:
               memory: 1000M
 volumes:
-  postgres_data:
+  db_data:
