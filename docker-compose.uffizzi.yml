@@ -47,7 +47,7 @@ services:
       - '3001:3001'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
     environment:
-      - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/typebot
+      - DATABASE_URL=postgresql://postgres:typebot@localhost:5432/PublicTypebot
       - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
       - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
     deploy:
