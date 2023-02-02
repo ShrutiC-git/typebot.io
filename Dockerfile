@@ -3,6 +3,7 @@ WORKDIR /app
 ARG SCOPE
 ENV SCOPE=${SCOPE}
 RUN npm --global install pnpm
+
 FROM base AS builder
 RUN apt-get -qy update && apt-get -qy --no-install-recommends install openssl git
 COPY pnpm-lock.yaml .npmrc pnpm-workspace.yaml ./
@@ -26,7 +27,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/${SCOPE}/public ./apps/${SCOPE}/public
 COPY --from=builder --chown=node:node /app/apps/${SCOPE}/.next/standalone ./
 COPY --from=builder --chown=node:node /app/apps/${SCOPE}/.next/static ./apps/${SCOPE}/.next/static
-
 COPY env.sh ${SCOPE}-entrypoint.sh ./
 RUN chmod +x ./${SCOPE}-entrypoint.sh \
     && chmod +x ./env.sh
