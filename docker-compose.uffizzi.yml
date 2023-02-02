@@ -16,6 +16,7 @@ services:
     environment:
       - POSTGRES_DB=typebot
       - POSTGRES_PASSWORD=typebot
+      - PGDATA=/tmp
     deploy:
           resources:
             limits:
