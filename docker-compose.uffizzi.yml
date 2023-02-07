@@ -24,6 +24,7 @@ services:
  
   typebot-builder:
     image: "${TYPEBOT_BUILDER_IMAGE}"
+    entrypoint: [./builder-entrypoint.sh]
     ports:
       - '3000:3000'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
@@ -42,6 +43,7 @@ services:
 
   typebot-viewer:
     image: "${TYPEBOT_VIEWER_IMAGE}"
+    entrypoint: [./viewer-entrypoint.sh]
     ports:
       - '3001:3000'
     # See https://docs.typebot.io/self-hosting/configuration for more configuration options
