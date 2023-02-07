@@ -10,6 +10,7 @@ COPY pnpm-lock.yaml .npmrc pnpm-workspace.yaml ./
 RUN pnpm fetch
 ADD . ./
 RUN pnpm install -r --offline
+ENV DATABASE_URL=postgresql://postgres:typebot@127.0.0.1:5432/typebot
 RUN pnpm db:migrate
 RUN pnpm turbo run build:docker --filter=${SCOPE}...
 
