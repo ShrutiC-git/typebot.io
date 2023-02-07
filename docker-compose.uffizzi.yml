@@ -1,0 +1,59 @@
+version: '3.3'
+
+# uffizzi integration
+x-uffizzi:
+  ingress:
+    service: typebot-viewer
+    port: 3001
+
+services:
+
+  typebot-db:
+    image: postgres:13
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=typebot
+      - POSTGRES_PASSWORD=typebot
+      - PGDATA=/tmp
+    deploy:
+          resources:
+            limits:
+              memory: 1000M
+ 
+  typebot-builder:
+    image: "${TYPEBOT_BUILDER_IMAGE}"
+    entrypoint: [./builder-entrypoint.sh]
+    ports:
+      - '3000:3000'
+    # See https://docs.typebot.io/self-hosting/configuration for more configuration options
+    environment:
+      - DATABASE_URL=postgresql://postgres:typebot@127.0.0.1:5432/typebot
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
+      - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
+      - ADMIN_EMAIL=me@email.com
+      - GITHUB_CLIENT_ID=37a279454d016598c2df
+      - GITHUB_CLIENT_SECRET=4b288a509352b591cd4478e3ac901668b2f8ed03
+    deploy:
+          resources:
+            limits:
+              memory: 1000M
+
+  typebot-viewer:
+    image: "${TYPEBOT_VIEWER_IMAGE}"
+    entrypoint: [./viewer-entrypoint.sh]
+    ports:
+      - '3001:3000'
+    # See https://docs.typebot.io/self-hosting/configuration for more configuration options
+    environment:
+      - DATABASE_URL=postgresql://postgres:typebot@127.0.0.1:5432/typebot
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
+      - ENCRYPTION_SECRET=SgVkYp2s5v8y/B?E(H+MbQeThWmZq4t6
+    deploy:
+          resources:
+            limits:
+              memory: 1000M
+volumes:
+  db_data:

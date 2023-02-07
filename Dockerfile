@@ -12,6 +12,7 @@ ADD . ./
 RUN pnpm install -r --offline
 RUN pnpm turbo run build:docker --filter=${SCOPE}...
 
+
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV production
@@ -27,7 +28,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/${SCOPE}/public ./apps/${SCOPE}/public
 COPY --from=builder --chown=node:node /app/apps/${SCOPE}/.next/standalone ./
 COPY --from=builder --chown=node:node /app/apps/${SCOPE}/.next/static ./apps/${SCOPE}/.next/static
-
 COPY env.sh ${SCOPE}-entrypoint.sh ./
 RUN chmod +x ./${SCOPE}-entrypoint.sh \
     && chmod +x ./env.sh
